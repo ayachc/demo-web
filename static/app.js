@@ -202,7 +202,7 @@ async function requestJson(url, options = {}) {
     method: options.method || "GET",
     headers: {
       "Content-Type": "application/json",
-      "X-Request-ID": crypto.randomUUID(),
+      "X-Request-ID": createRequestId(),
     },
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
@@ -233,6 +233,14 @@ function showToast(message) {
   showToast.timer = setTimeout(() => {
     elements.toast.classList.add("hidden");
   }, 2400);
+}
+
+function createRequestId() {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+
+  return `req-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }
 
 function escapeHtml(value) {
