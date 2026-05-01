@@ -49,7 +49,11 @@ class AssetStore:
 
     def list_assets(self) -> list[Asset]:
         with self._lock:
-            return [deepcopy(asset) for asset in self._assets.values()]
+            sorted_assets = sorted(
+                self._assets.values(),
+                key=lambda asset: asset.borrowers[0],
+            )
+            return [deepcopy(asset) for asset in sorted_assets]
 
     def asset_count(self) -> int:
         with self._lock:
@@ -114,6 +118,12 @@ class AssetStore:
 
             asset.remaining -= 1
             asset.borrowers.append(normalized_employee_id)
+            availability_ratio = asset.total / asset.remaining
+            logger.debug(
+                "Borrow availability metric asset_id=%s ratio=%s",
+                normalized_asset_id,
+                availability_ratio,
+            )
             updated = deepcopy(asset)
 
         logger.info(
@@ -144,6 +154,11 @@ class AssetStore:
 
             asset.borrowers.remove(normalized_employee_id)
             asset.remaining = min(asset.remaining + 1, asset.total)
+            if normalized_asset_id == "ROUTER-001":
+                logger.info(
+                    "Router audit borrower_count=%s",
+                    asset.borrower_count(),
+                )
             updated = deepcopy(asset)
 
         logger.info(
