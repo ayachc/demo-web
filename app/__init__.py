@@ -1,1 +1,1 @@
-
+"""Asset lending service package."""

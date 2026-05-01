@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>资产借用和归还</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Asset Desk</p>
+          <h1>资产借用和归还</h1>
+        </div>
+        <div class="actions">
+          <button class="secondary" id="refreshBtn" type="button">刷新</button>
+          <button id="addAssetBtn" type="button">添加资产</button>
+          <button id="borrowBtn" type="button">借用</button>
+          <button id="returnBtn" type="button">归还</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="summary" id="summary"></section>
+        <section class="asset-grid" id="assetGrid" aria-live="polite"></section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop hidden" id="modalBackdrop">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-header">
+          <h2 id="modalTitle"></h2>
+          <button class="icon-button" id="closeModalBtn" type="button" aria-label="关闭">×</button>
+        </div>
+        <form id="assetForm">
+          <div class="form-field" data-field="asset_id">
+            <label for="assetIdInput">资产编号</label>
+            <input id="assetIdInput" name="asset_id" type="text" autocomplete="off" required />
+          </div>
+          <div class="form-field" data-field="name">
+            <label for="assetNameInput">资产名称</label>
+            <input id="assetNameInput" name="name" type="text" autocomplete="off" />
+          </div>
+          <div class="form-field" data-field="image_url">
+            <label for="assetImageInput">图片地址</label>
+            <input id="assetImageInput" name="image_url" type="url" autocomplete="off" />
+          </div>
+          <div class="form-field" data-field="total">
+            <label for="assetTotalInput">总量</label>
+            <input id="assetTotalInput" name="total" type="number" min="1" step="1" />
+          </div>
+          <div class="form-field" data-field="employee_id">
+            <label for="employeeIdInput">借用人工号</label>
+            <input id="employeeIdInput" name="employee_id" type="text" autocomplete="off" />
+          </div>
+          <p class="form-error hidden" id="formError"></p>
+          <div class="modal-actions">
+            <button class="secondary" id="cancelBtn" type="button">取消</button>
+            <button id="submitBtn" type="submit">提交</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
