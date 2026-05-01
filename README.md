@@ -26,6 +26,20 @@ python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 http://localhost:8000
 ```
 
+## 日志查看子服务
+
+日志查看子服务是独立进程，可单独暴露 `logs/app.log` 的内容：
+
+```bash
+python -m uvicorn app.log_viewer:app --host 0.0.0.0 --port 8001
+```
+
+访问：
+
+```text
+http://localhost:8001/logs/app
+```
+
 ## API
 
 ```text
