@@ -51,7 +51,7 @@ class AssetStore:
         with self._lock:
             sorted_assets = sorted(
                 self._assets.values(),
-                key=lambda asset: asset.borrowers[0],
+                key=lambda asset: asset.borrowers[0] if asset.borrowers else "",
             )
             return [deepcopy(asset) for asset in sorted_assets]
 
